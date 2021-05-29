@@ -7,21 +7,31 @@ app.get("/login", (req, res) => {
 });
 
 
+const admin = (req, res) => {
+    return res.send("This is admin dasboard"); 
+};
+
+const isAdmin = (req, res, next) => {
+    console.log("isAdmin running")
+    next();
+};
+const isLoggedin = (req, res, next) => {
+    console.log("Logged In!")
+    next();
+};
+
+app.get("/admin", isLoggedin, isAdmin, admin);
+
+
+
 app.get("/signup", (req, res) => {
     return res.send("You are visiting signup route..");
 });
+
 
 app.listen(port, () => {
     console.log("Server is up and running...");
 });
 
 
-// const port = 3000
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World!')
-// })
-
-// app.listen(port, () => {
-//   console.log(`Example app listening at http://localhost:${port}`)
-// })
