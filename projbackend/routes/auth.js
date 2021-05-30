@@ -1,11 +1,7 @@
 var express = require("express");
-var router = express.Router()
+var router = express.Router();
+const {signout} = require("../controllers/auth")
 
-router.get("/signout", (req, res) => {
-    res.json({
-        message : "User Signout Success"
-    });
-});
-
+router.get("/signout", signout);
 module.exports = router;
 
