@@ -6,7 +6,7 @@ var expressJwt = require('express-jwt');
 
 
 exports.signup = (req, res) => {
-    const errors = validationResult(req)
+    const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(422).json({
             error : errors.array()[0].msg
@@ -30,6 +30,7 @@ exports.signup = (req, res) => {
 
 
 exports.signin = (req,res) => {
+    const errors = validationResult(req);
     const {email, password} = req.body;
 
     if(!errors.isEmpty()){
@@ -38,10 +39,10 @@ exports.signin = (req,res) => {
         });
     }
     User.findOne({email}, (err, user) => {
-        if(err){
-            res.status(400).json({
+        if(err || !user){
+            return res.status(400).json({
                 error : " User email does not exist"
-            })
+            });
         }
 
         if(!user.authenticate(password)){
